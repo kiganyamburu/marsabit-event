@@ -2,11 +2,12 @@ import { events } from "@/lib/data/events";
 import Image from "next/image";
 
 interface EventPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export default function EventPage({ params }: EventPageProps) {
-  const event = events.find((e) => e.id === params.id);
+export default async function EventPage({ params }: EventPageProps) {
+  const { id } = await params;
+  const event = events.find((e) => e.id === id);
 
   if (!event) {
     return <p className="text-center mt-10 text-red-500">Event not found.</p>;

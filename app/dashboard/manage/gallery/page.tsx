@@ -3,6 +3,7 @@ import { useState } from "react";
 import { galleries as initialGalleries } from "@/lib/data/gallery";
 import { events as eventsData } from "@/lib/data/events";
 import { Pencil, Trash2 } from "lucide-react";
+import Image from "next/image";
 
 export default function ManageGalleryPage() {
   const [galleries, setGalleries] = useState(initialGalleries);
@@ -39,11 +40,13 @@ export default function ManageGalleryPage() {
                   <td className="p-3 border">
                     <div className="flex space-x-2">
                       {gallery.images.slice(0, 4).map((img, idx) => (
-                        <img
+                        <Image
                           key={idx}
                           src={img}
                           alt={`Gallery Image ${idx + 1}`}
                           className="w-16 h-16 object-cover rounded border"
+                          width={64}
+                          height={64}
                         />
                       ))}
                     </div>
