@@ -32,7 +32,7 @@ export default function Hero() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
               Welcome to
               <span className="block text-primary-green drop-shadow-lg">
-                Marsabit Cultural and Art Events
+                Marsabit Lake Turkana Cultural Festival
               </span>
             </h1>
 
