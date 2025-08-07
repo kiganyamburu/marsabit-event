@@ -2,9 +2,11 @@
 import { Event } from "@/lib/interfaces/event";
 import { useState, useEffect } from "react";
 import { events } from "@/lib/data/events";
+import { isEventSoon } from "@/lib/utils/eventUtils";
 import Image from "next/image";
 import Link from "next/link";
 import Hero from "./Hero";
+import Countdown from "./Countdown";
 
 const today = new Date("2025-07-30");
 const futureDate = new Date("2025-08-6");
@@ -92,49 +94,78 @@ export default function Events() {
 
         {/* Events Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredEvents.map((event) => (
-            <Link
-              href={`/events/${event.id}`}
-              key={event.id}
-              className="bg-white border-2 border-gray-200 rounded-lg shadow-lg p-6 flex flex-col hover:shadow-xl hover:border-primary-green transition-all duration-300 transform hover:-translate-y-1"
-            >
-              <Image
-                src={event.images_url[0]}
-                alt={event.title}
-                className="w-full h-48 object-cover rounded-lg mb-4"
-                width={400}
-                height={200}
-              />
-              <h2 className="text-xl font-bold mt-3 text-primary-blue">
-                {event.title}
-              </h2>
-              <p className="text-sm text-secondary-green font-medium">
-                📍 {event.venue}
-              </p>
-              <p className="mt-3 text-gray-dark text-sm leading-relaxed">
-                {event.description}
-              </p>
-              <p className="mt-4 text-sm text-gray-medium">
-                📅 {new Date(event.start_date).toLocaleDateString()} -{" "}
-                {new Date(event.end_date).toLocaleDateString()}
-              </p>
-              <span
-                className={`inline-block mt-4 text-white text-xs font-bold px-4 py-2 rounded-full ${
-                  event.category === "Cultural"
-                    ? "bg-primary-green"
-                    : event.category === "Sports"
-                    ? "bg-secondary-blue"
-                    : event.category === "Music"
-                    ? "bg-accent-red"
-                    : event.category === "Art"
-                    ? "bg-primary-blue"
-                    : "bg-gray-medium"
+          {filteredEvents.map((event) => {
+            const isSoon = isEventSoon(event, 7); // Events within 7 days
+
+            return (
+              <Link
+                href={`/events/${event.id}`}
+                key={event.id}
+                className={`bg-white border-2 rounded-lg shadow-lg p-6 flex flex-col hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative ${
+                  isSoon
+                    ? "border-accent-red hover:border-red-600"
+                    : "border-gray-200 hover:border-primary-green"
                 }`}
               >
-                {event.category}
-              </span>
-            </Link>
-          ))}
+                {/* Urgent indicator for events happening soon */}
+                {isSoon && (
+                  <div className="absolute -top-2 -right-2 bg-accent-red text-white text-xs font-bold px-2 py-1 rounded-full animate-pulse">
+                    Soon!
+                  </div>
+                )}
+                <Image
+                  src={event.images_url[0]}
+                  alt={event.title}
+                  className="w-full h-48 object-cover rounded-lg mb-4"
+                  width={400}
+                  height={200}
+                />
+                <h2 className="text-xl font-bold mt-3 text-primary-blue">
+                  {event.title}
+                </h2>
+                <p className="text-sm text-secondary-green font-medium">
+                  📍 {event.venue}
+                </p>
+                <p className="mt-3 text-gray-dark text-sm leading-relaxed">
+                  {event.description}
+                </p>
+                <p className="mt-4 text-sm text-gray-medium">
+                  📅 {new Date(event.start_date).toLocaleDateString()} -{" "}
+                  {new Date(event.end_date).toLocaleDateString()}
+                </p>
+
+                {/* Show countdown for upcoming events */}
+                {new Date(event.start_date) > new Date() && (
+                  <div className="mt-4 bg-gray-100 p-3 rounded-lg">
+                    <p className="text-xs text-gray-medium mb-2 text-center font-medium">
+                      Event starts in:
+                    </p>
+                    <Countdown
+                      targetDate={new Date(event.start_date)}
+                      size="small"
+                      className="justify-center"
+                    />
+                  </div>
+                )}
+
+                <span
+                  className={`inline-block mt-4 text-white text-xs font-bold px-4 py-2 rounded-full ${
+                    event.category === "Cultural"
+                      ? "bg-primary-green"
+                      : event.category === "Sports"
+                      ? "bg-secondary-blue"
+                      : event.category === "Music"
+                      ? "bg-accent-red"
+                      : event.category === "Art"
+                      ? "bg-primary-blue"
+                      : "bg-gray-medium"
+                  }`}
+                >
+                  {event.category}
+                </span>
+              </Link>
+            );
+          })}
         </div>
 
         {filteredEvents.length === 0 && (
