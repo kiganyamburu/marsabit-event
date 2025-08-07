@@ -31,7 +31,7 @@ export default function Hero() {
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
               Welcome to
-              <span className="block text-primary-green drop-shadow-lg">
+              <span className="block text-primary-white drop-shadow-lg">
                 Marsabit Lake Turkana Cultural Festival
               </span>
             </h1>
