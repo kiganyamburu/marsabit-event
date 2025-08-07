@@ -45,7 +45,7 @@ export default function Navbar() {
                   className={`${
                     pathname === link.href
                       ? "text-primary-green font-semibold border-b-2 border-primary-green pb-1"
-                      : "text-gray-dark hover:text-primary-green transition-colors duration-200"
+                      : "text-gray-500 hover:text-primary-green transition-colors duration-200"
                   }`}
                 >
                   {link.name}

@@ -126,7 +126,7 @@ export default function Events() {
                 <p className="text-sm text-secondary-green font-medium">
                   📍 {event.venue}
                 </p>
-                <p className="mt-3 text-gray-dark text-sm leading-relaxed">
+                <p className="mt-3 text-gray-500 text-sm leading-relaxed">
                   {event.description}
                 </p>
                 <p className="mt-4 text-sm text-gray-medium">

@@ -15,7 +15,7 @@ export default async function EventPage({ params }: EventPageProps) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-6 ">
       <Image
         src={event.images_url[0] || "https://via.placeholder.com/800x400"}
         alt={event.title}
@@ -23,7 +23,7 @@ export default async function EventPage({ params }: EventPageProps) {
         height={400}
         className="w-full h-80 object-cover rounded mb-6"
       />
-      <h1 className="text-4xl font-bold mb-4">{event.title}</h1>
+      <h1 className="text-4xl font-bold mb-4 text-black">{event.title}</h1>
       <p className="text-gray-600 text-sm mb-4">
         {event.venue} - {event.address}
       </p>
@@ -58,7 +58,7 @@ export default async function EventPage({ params }: EventPageProps) {
       )}
 
       <div className="mt-6">
-        <h3 className="font-semibold text-lg mb-2">Organizer</h3>
+        <h3 className="font-semibold text-lg mb-2 text-lime-500">Organizer</h3>
         <p className="text-gray-700">{event.organizer_name}</p>
         <p className="text-gray-700 text-sm">{event.organizer_email}</p>
         <p className="text-gray-700 text-sm">{event.organizer_phone}</p>
